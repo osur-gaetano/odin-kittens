@@ -35,7 +35,7 @@ class KittensController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
     @kitten = Kitten.find(params[:id])
     @kitten.destroy
 

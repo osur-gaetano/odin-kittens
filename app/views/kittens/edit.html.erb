@@ -1,0 +1,20 @@
+<h1>Edit Kitten</h1>
+
+<% flash.each do |type, msg| %>
+  <div>
+    <%= msg %>
+  </div>
+<% end %>
+
+<%= render "form", kitten: @kitten %>
+
+<ul>
+    <li><%= link_to "Home", root_path%></li>    
+    <li><%= link_to "Edit", edit_kitten_path(@kitten)%></li>
+    <li>
+        <%= link_to "Delete", kitten_path(@kitten), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure ?"
+        }%>
+    </li>
+</ul>

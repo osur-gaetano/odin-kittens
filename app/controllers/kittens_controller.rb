@@ -2,10 +2,20 @@ class KittensController < ApplicationController
   def index
     @kittens = Kitten.all
     flash.now[:notice] = "There are #{@kittens.size} kittens here!!!!"
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @kittens }
+    end
+
   end
 
   def show
     @kitten = Kitten.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.json { render json: @kitten }
+    end
   end
 
   def new

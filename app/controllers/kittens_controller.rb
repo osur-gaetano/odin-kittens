@@ -1,6 +1,7 @@
 class KittensController < ApplicationController
   def index
     @kittens = Kitten.all
+    flash.now[:notice] = "There are #{@kittens.size} kittens here!!!!"
   end
 
   def show
@@ -11,27 +12,29 @@ class KittensController < ApplicationController
     @kitten = Kitten.new
   end
 
-  def edit
-    @kitten = Kitten.find(params[:id])
-  end
-
+  
   def create
     @kitten = Kitten.new(kitten_params)
-
+    
     if @kitten.save
-      redirect_to @kitten
+      redirect_to @kitten, notice: "Kiten created successfully !"
     else
+      flash[:alert]= "Kitten not created "
       render :new, status: :unprocessable_entity
     end
   end
 
+  def edit
+    @kitten = Kitten.find(params[:id])
+  end
+  
   def update
     @kitten = Kitten.find(params[:id])
 
     if @kitten.update(kitten_params)
-      redirect_to @kitten
+      redirect_to @kitten, notice: "Kitten information has been successfully edited!!"
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity, alert: "Kitten details were not updated"
     end
   end
 
@@ -39,7 +42,7 @@ class KittensController < ApplicationController
     @kitten = Kitten.find(params[:id])
     @kitten.destroy
 
-    redirect_to root_path, status: :see_other
+    redirect_to root_path, status: :see_other, notice: "Kitten deleted!"
   end
 
   private
